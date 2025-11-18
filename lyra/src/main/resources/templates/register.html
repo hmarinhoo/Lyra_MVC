@@ -1,0 +1,20 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8" />
+    <title>Register - Lyra</title>
+</head>
+<body>
+<h2>Register</h2>
+<form th:action="@{/api/auth/register}" method="post">
+    <label>Name: <input type="text" name="name"/></label><br/>
+    <label>Email: <input type="email" name="email"/></label><br/>
+    <label>Password: <input type="password" name="password"/></label><br/>
+    <label>Experience Level: <input type="text" name="experienceLevel"/></label><br/>
+    <label>Interests (CSV): <input type="text" name="interests"/></label><br/>
+    <label>Locale: <input type="text" name="locale"/></label><br/>
+    <button type="submit">Register</button>
+    <p><a th:href="@{/}">Back</a></p>
+</form>
+</body>
+</html>
