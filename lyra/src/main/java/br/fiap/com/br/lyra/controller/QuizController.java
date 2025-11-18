@@ -4,8 +4,6 @@ import br.fiap.com.br.lyra.model.CareerTrail;
 import br.fiap.com.br.lyra.model.Quiz;
 import br.fiap.com.br.lyra.service.QuizService;
 import jakarta.validation.constraints.NotBlank;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import br.fiap.com.br.lyra.repository.CareerTrailRepository;
@@ -22,7 +20,6 @@ public class QuizController {
     private final QuizService quizService;
     private final CareerTrailRepository trailRepository;
 
-    @Autowired
     public QuizController(QuizService quizService, CareerTrailRepository trailRepository) {
         this.quizService = quizService;
         this.trailRepository = trailRepository;

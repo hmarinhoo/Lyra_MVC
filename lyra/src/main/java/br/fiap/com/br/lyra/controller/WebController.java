@@ -3,7 +3,6 @@ package br.fiap.com.br.lyra.controller;
 import br.fiap.com.br.lyra.model.CareerTrail;
 import br.fiap.com.br.lyra.repository.CareerTrailRepository;
 import br.fiap.com.br.lyra.repository.UserRepository;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -18,7 +17,6 @@ public class WebController {
     private final UserRepository userRepository;
     private final CareerTrailRepository trailRepository;
 
-    @Autowired
     public WebController(UserRepository userRepository, CareerTrailRepository trailRepository) {
         this.userRepository = userRepository;
         this.trailRepository = trailRepository;

@@ -8,8 +8,6 @@ import br.fiap.com.br.lyra.repository.UserRepository;
 import br.fiap.com.br.lyra.security.JwtUtil;
 import br.fiap.com.br.lyra.service.UserService;
 import jakarta.validation.Valid;
-
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.security.crypto.password.PasswordEncoder;
@@ -28,7 +26,6 @@ public class AuthController {
     private final UserRepository userRepository;
     private final JwtUtil jwtUtil;
 
-    @Autowired
     public AuthController(UserService userService, PasswordEncoder passwordEncoder, UserRepository userRepository, JwtUtil jwtUtil) {
         this.userService = userService;
         this.passwordEncoder = passwordEncoder;

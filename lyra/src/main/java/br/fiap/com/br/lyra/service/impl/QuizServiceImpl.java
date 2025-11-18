@@ -11,7 +11,6 @@ import br.fiap.com.br.lyra.service.QuizService;
 import br.fiap.com.br.lyra.config.RabbitConfig;
 import br.fiap.com.br.lyra.dto.GenerationRequest;
 import org.springframework.amqp.rabbit.core.RabbitTemplate;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -24,7 +23,6 @@ public class QuizServiceImpl implements QuizService {
     private final CareerTrailRepository trailRepository;
     private final RabbitTemplate rabbitTemplate;
 
-    @Autowired
     public QuizServiceImpl(QuizRepository quizRepository, UserRepository userRepository, AIGenerativeService aiService, CareerTrailRepository trailRepository, RabbitTemplate rabbitTemplate) {
         this.quizRepository = quizRepository;
         this.userRepository = userRepository;

@@ -5,7 +5,6 @@ import br.fiap.com.br.lyra.model.Quiz;
 import br.fiap.com.br.lyra.repository.QuizRepository;
 import br.fiap.com.br.lyra.service.impl.QuizServiceImpl;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
-import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 @Component
@@ -14,7 +13,6 @@ public class TrailMessageListener {
     private final QuizRepository quizRepository;
     private final QuizServiceImpl quizService;
 
-    @Autowired
     public TrailMessageListener(QuizRepository quizRepository, QuizServiceImpl quizService) {
         this.quizRepository = quizRepository;
         this.quizService = quizService;
