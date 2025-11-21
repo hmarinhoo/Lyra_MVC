@@ -1,51 +1,33 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org"
-      th:replace="layout :: content (~{::body})"
-      th:with="title='Criar Conta - Lyra'">
-
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Cadastro - GreenPath</title>
+</head>
 <body>
+    <h1>Cadastro</h1>
+    <form th:action="@{/register}" method="post">
+        <label for="name">Nome:</label>
+        <input type="text" id="name" name="name" required><br><br>
 
-<div class="row justify-content-center mt-5">
-    <div class="col-md-6">
+        <label for="email">E-mail:</label>
+        <input type="email" id="email" name="email" required><br><br>
 
-        <div class="card shadow p-4">
+        <label for="password">Senha:</label>
+        <input type="password" id="password" name="password" required><br><br>
 
-            <h3 class="text-center mb-4">Criar Conta</h3>
+        <label for="interest">Área de interesse:</label>
+        <input type="text" id="interest" name="interest" required><br><br>
 
-            <!-- Erro global -->
-            <div th:if="${error}" class="alert alert-danger" th:text="${error}"></div>
+        <label for="level">Nível de experiência:</label>
+        <select id="level" name="level" required>
+            <option value="iniciante">Iniciante</option>
+            <option value="intermediario">Intermediário</option>
+            <option value="avancado">Avançado</option>
+        </select><br><br>
 
-            <form th:action="@{/auth/register}" th:object="${registerRequest}" method="post">
-
-                <div class="mb-3">
-                    <label class="form-label">Nome</label>
-                    <input th:field="*{name}" type="text" class="form-control">
-                    <div class="text-danger" th:errors="*{name}"></div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">E-mail</label>
-                    <input th:field="*{email}" type="email" class="form-control">
-                    <div class="text-danger" th:errors="*{email}"></div>
-                </div>
-
-                <div class="mb-3">
-                    <label class="form-label">Senha</label>
-                    <input th:field="*{password}" type="password" class="form-control">
-                    <div class="text-danger" th:errors="*{password}"></div>
-                </div>
-
-                <button type="submit" class="btn btn-primary w-100">Criar</button>
-            </form>
-
-            <p class="text-center mt-3">
-                Já tem conta?
-                <a th:href="@{/auth/login}">Entrar</a>
-            </p>
-
-        </div>
-    </div>
-</div>
-
+        <button type="submit">Cadastrar</button>
+    </form>
+    <p>Já tem conta? <a th:href="@{/login}">Faça login</a></p>
 </body>
 </html>

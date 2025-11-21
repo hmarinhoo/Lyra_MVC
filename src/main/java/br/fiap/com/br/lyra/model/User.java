@@ -16,10 +16,10 @@ import java.util.Set;
 
 
 
+@Data
 @Builder
 @NoArgsConstructor
 @AllArgsConstructor
-@Data
 @Entity
 @Table(name = "users")
 public class User {

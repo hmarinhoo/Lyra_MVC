@@ -14,7 +14,7 @@ INSERT INTO users (
 ) VALUES (
     'Usuário Teste',
     'teste@teste.com',
-    '$2a$12$kKcX7R9VboHF4brxoDmE3OMFZWrmaG5YYwjXCbH2swvxguejlzgsK', -- senha: 12345678
+    '$2a$12$f2mf10sS2BpdxAsdu9DsZuNxrjxV1pee4OFOzKAhsVS91GcKW0XrS', -- senha: 123456
     'iniciante',
     'java,backend,carreira',
     'pt_BR',

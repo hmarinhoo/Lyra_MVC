@@ -2,31 +2,35 @@ package br.fiap.com.br.lyra.service;
 
 import br.fiap.com.br.lyra.model.User;
 import br.fiap.com.br.lyra.repository.UserRepository;
-import br.fiap.com.br.lyra.security.JwtUtil;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
+
+import java.util.Optional;
 
 @Service
 public class AuthService {
 
     private final UserRepository userRepository;
     private final PasswordEncoder encoder;
-    private final JwtUtil jwtUtil;
 
-    public AuthService(UserRepository userRepository, PasswordEncoder encoder, JwtUtil jwtUtil) {
+    public AuthService(UserRepository userRepository, PasswordEncoder encoder) {
         this.userRepository = userRepository;
         this.encoder = encoder;
-        this.jwtUtil = jwtUtil;
     }
 
-    public String login(String email, String password) {
-        User user = userRepository.findByEmail(email)
-                .orElseThrow(() -> new IllegalArgumentException("Invalid credentials"));
+    // Usado para registrar novo usuário
+    public User register(User user) {
+        user.setPassword(encoder.encode(user.getPassword()));
+        return userRepository.save(user);
+    }
 
-        if (!encoder.matches(password, user.getPassword())) {
-            throw new IllegalArgumentException("Invalid credentials");
+    // Valida email e senha (para login via Spring Security)
+    public boolean authenticate(String email, String password) {
+        Optional<User> optionalUser = userRepository.findByEmail(email);
+        if (optionalUser.isEmpty()) {
+            return false;
         }
-
-        return jwtUtil.generateToken(email);
+        User user = optionalUser.get();
+        return encoder.matches(password, user.getPassword());
     }
 }

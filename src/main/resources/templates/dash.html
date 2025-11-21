@@ -1,0 +1,29 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <title>Dashboard - GreenPath</title>
+</head>
+<body>
+    <h1>Olá, <span th:text="${user.name}">Usuário</span>!</h1>
+    <p>Área de interesse: <span th:text="${user.interest}"></span></p>
+    <p>Nível de experiência: <span th:text="${user.level}"></span></p>
+
+    <div>
+        <a th:href="@{/quiz}"><button>Realizar Quiz</button></a>
+    </div>
+
+    <div th:if="${quizResult != null}">
+        <h2>Resultado do Quiz</h2>
+        <p>Perfil: <span th:text="${quizResult.profile}"></span></p>
+        <p>Trilha sugerida:</p>
+        <ul>
+            <li th:each="course : ${quizResult.trail}" th:text="${course}"></li>
+        </ul>
+    </div>
+
+    <form th:action="@{/logout}" method="post">
+        <button type="submit">Sair</button>
+    </form>
+</body>
+</html>
