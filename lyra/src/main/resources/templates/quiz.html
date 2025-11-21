@@ -1,19 +1,47 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head>
-    <meta charset="UTF-8" />
-    <title>Quiz - Lyra</title>
-</head>
+<html xmlns:th="http://www.thymeleaf.org"
+      th:replace="layout :: content (~{::body})"
+      th:with="title='Quiz - Lyra'">
+
 <body>
-<h2>Perfil Quiz</h2>
-<p>Insira suas respostas em formato livre (ex:/descreva interesses, skills e metas).</p>
-<form th:action="@{/api/quiz/submit}" method="post">
-    <label>User ID: <input type="number" name="userId" required/></label><br/>
-    <label>Answers (text / JSON):<br/>
-        <textarea name="" rows="8" cols="80" name="answersJson"></textarea>
-    </label><br/>
-    <button type="submit">Enviar Quiz</button>
-    <p><a th:href="@{/}">Back</a></p>
+
+<h2 class="mb-4 text-center">Quiz Vocacional</h2>
+
+<form th:action="@{/quiz}" method="post">
+
+    <!-- PERGUNTA 1 -->
+    <div class="card p-3 mb-3">
+        <label class="fw-bold">1. O que mais te motiva?</label>
+        <select name="q1" class="form-select">
+            <option value="Criatividade">Criatividade</option>
+            <option value="Tecnologia">Tecnologia</option>
+            <option value="Liderança">Liderança</option>
+            <option value="Pesquisa e Ciência">Pesquisa e Ciência</option>
+        </select>
+    </div>
+
+    <!-- PERGUNTA 2 -->
+    <div class="card p-3 mb-3">
+        <label class="fw-bold">2. Como você se considera?</label>
+        <select name="q2" class="form-select">
+            <option value="Analítico">Analítico</option>
+            <option value="Comunicativo">Comunicativo</option>
+            <option value="Técnico">Técnico</option>
+        </select>
+    </div>
+
+    <!-- PERGUNTA 3 -->
+    <div class="card p-3 mb-3">
+        <label class="fw-bold">3. Qual tipo de trabalho você prefere?</label>
+        <select name="q3" class="form-select">
+            <option value="Equipe">Trabalhar em equipe</option>
+            <option value="Sozinho">Trabalhar sozinho</option>
+            <option value="Liderança">Liderar projetos</option>
+        </select>
+    </div>
+
+    <button class="btn btn-primary w-100">Enviar Respostas</button>
 </form>
+
 </body>
 </html>
