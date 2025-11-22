@@ -7,3 +7,4 @@ public record CareerTrailListDTO(
     String profile,
     Instant createdAt
 ) {}
+

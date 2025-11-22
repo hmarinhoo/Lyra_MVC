@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lyra - Dashboard</title>
+    <title th:text="#{home.title}">Lyra - Home</title>
     <link rel="stylesheet" th:href="@{/css/home.css}">
 </head>
 <body>
@@ -23,12 +23,18 @@
     <!-- Navigation Header -->
     <header class="navbar">
         <div class="navbar-content">
+             <nav class="nav-links">
+                 <!-- Language Switch -->
+                 <a th:href="@{/home(lang='pt_BR')}" class="card-button primary">🇧🇷 Português</a>
+                 <a th:href="@{/home(lang='en_US')}" class="card-button primary">🇺🇸 English</a>
+             </nav>
             <div class="logo">
                 <h1>Lyra</h1>
             </div>
             <nav class="nav-links">
-                <a th:href="@{/dashboard}" class="nav-link">Dashboard</a>
-                <a th:href="@{/profile}" class="nav-link">Acesse sua conta</a>
+                <a th:href="@{/dashboard}" class="nav-link" th:text="#{nav.dashboard}">Dashboard</a>
+                <a th:href="@{/profile}" class="nav-link" th:text="#{nav.profile}">Profile</a>
+
             </nav>
         </div>
     </header>
@@ -38,9 +44,9 @@
         <!-- Welcome Section -->
         <section class="welcome-section">
             <div class="welcome-card">
-                <h2 class="greeting">Bem-vindo de volta,</h2>
-                <h1 class="user-name" th:text="${user.name}"></h1>
-                <p class="welcome-subtitle">Sua jornada de crescimento profissional continua aqui. Explore novas trilhas e alcance seu potencial máximo.</p>
+                <h2 class="greeting" th:text="#{home.hero.title}">Bem-vindo de volta,</h2>
+                <h1 class="user-name" th:text="${user.name}">Usuário</h1>
+                <p class="welcome-subtitle" th:text="#{home.hero.subtitle}">Sua jornada de crescimento profissional continua aqui.</p>
             </div>
         </section>
 
@@ -50,42 +56,41 @@
             <div th:if="${quiz != null}" class="action-card quiz-card">
                 <div class="card-header">
                     <div class="card-icon">📚</div>
-                    <h3>Trilha em Progresso</h3>
+                    <h3 th:text="#{home.quiz.inProgress}">Trilha em Progresso</h3>
                 </div>
-                <p class="card-subtitle" th:text="${quiz.trilha}"></p>
-                <p class="card-description">Continue sua jornada e aproveite cada módulo de aprendizado</p>
-                <a th:href="@{/quiz/continuar}" class="card-button primary">Continuar Trilha</a>
+                <p class="card-subtitle" th:text="${quiz.profile}">Perfil do Quiz</p>
+                <p class="card-description" th:text="#{home.quiz.description}">Continue sua jornada e aproveite cada módulo</p>
+                <a th:href="@{/quiz}" class="card-button primary" th:text="#{home.quiz.continue}">Continuar Trilha</a>
             </div>
 
             <!-- No Quiz Card -->
             <div th:if="${quiz == null}" class="action-card start-card">
                 <div class="card-header">
                     <div class="card-icon">🚀</div>
-                    <h3>Comece Sua Trilha</h3>
+                    <h3 th:text="#{home.quiz.start}">Comece Sua Trilha</h3>
                 </div>
-                <p class="card-description">Não tem nenhuma trilha ativa. Descubra o caminho perfeito para você!</p>
-                <a th:href="@{/quiz}" class="card-button primary">Iniciar Quiz</a>
+                <p class="card-description" th:text="#{home.quiz.noActive}">Não tem nenhuma trilha ativa.</p>
+                <a th:href="@{/quiz}" class="card-button primary" th:text="#{home.quiz.startButton}">Iniciar Quiz</a>
             </div>
 
             <!-- Dashboard Card -->
             <div class="action-card dashboard-card">
                 <div class="card-header">
                     <div class="card-icon">📊</div>
-                    <h3>Seu Progresso</h3>
+                    <h3 th:text="#{home.dashboard.title}">Seu Progresso</h3>
                 </div>
-                <p class="card-description">Visualize estatísticas, badges e conquistas da sua jornada</p>
-                <a th:href="@{/dashboard}" class="card-button secondary">Acessar Dashboard</a>
+                <p class="card-description" th:text="#{home.dashboard.desc}">Visualize estatísticas, badges e conquistas</p>
+                <a th:href="@{/dashboard}" class="card-button secondary" th:text="#{home.dashboard.button}">Acessar Dashboard</a>
             </div>
         </section>
 
         <!-- Motivation Section -->
         <section class="motivation-section">
             <div class="motivation-card">
-                <p class="motivation-text">O sucesso profissional não é uma corrida, é uma jornada. Com Lyra, você tem um mentor que entende seus objetivos e cria um caminho personalizado para alcançá-los.</p>
-                <p class="motivation-author">— Transforme seu futuro, começe hoje</p>
+                <p class="motivation-text" th:text="#{home.motivation.text}">O sucesso profissional não é uma corrida, é uma jornada.</p>
+                <p class="motivation-author" th:text="#{home.motivation.author}">— Transforme seu futuro, começe hoje</p>
             </div>
         </section>
     </main>
-
 </body>
 </html>

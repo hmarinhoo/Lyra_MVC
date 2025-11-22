@@ -3,8 +3,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Quiz - Lyra</title>
+    <title th:text="#{quiz.title}">Quiz - Lyra</title>
     <link rel="stylesheet" href="/css/quiz.css"> 
+    <link rel="stylesheet" href="/css/home.css"> 
 </head>
 <body>
     <!-- Animated Background -->
@@ -23,12 +24,16 @@
     <!-- Navbar -->
     <nav class="navbar">
         <div class="navbar-content">
+            <nav class="nav-links">
+                <!-- Language Switch -->
+                <a th:href="@{/quiz(lang='pt_BR')}" class="card-button primary">🇧🇷 Português</a>
+                <a th:href="@{/quiz(lang='en_US')}" class="card-button primary">🇺🇸 English</a>
+            </nav>
             <div class="logo">
                 <h1>Lyra</h1>
             </div>
             <div class="nav-links">
-                <a href="/home" class="nav-link">Home</a>
-                <a href="/logout" class="nav-link logout">Sair</a>
+                <a href="@{/home}" class="nav-link" th:text="#{nav.home}">Home</a>
             </div>
         </div>
     </nav>
@@ -37,8 +42,8 @@
     <main class="main-content">
         <!-- Quiz Header -->
         <div class="quiz-header">
-            <h1 class="quiz-title">🎯 Quiz de Perfil Profissional</h1>
-            <p class="quiz-subtitle">Descubra a trilha de carreira perfeita para você no Lyra</p>
+            <h1 class="quiz-title" th:text="#{quiz.header}">🎯 Quiz de Perfil Profissional</h1>
+            <p class="quiz-subtitle" th:text="#{quiz.subtitle}">Descubra a trilha de carreira perfeita para você no Lyra</p>
             <div class="progress-bar">
                 <div class="progress-fill"></div>
             </div>
@@ -51,24 +56,24 @@
             <div class="quiz-card" style="animation-delay: 0.1s;">
                 <div class="question-header">
                     <span class="question-number">1</span>
-                    <h2>Qual habilidade você mais domina?</h2>
+                    <h2 th:text="#{quiz.q1}">Qual habilidade você mais domina?</h2>
                 </div>
                 <div class="options-group">
                     <label class="option-label">
                         <input type="radio" name="skill" value="Logica" required>
-                        <span class="option-text">Lógica de programação</span>
+                        <span class="option-text" th:text="#{quiz.q1.opt1}">Lógica de programação</span>
                     </label>
                     <label class="option-label">
                         <input type="radio" name="skill" value="Design">
-                        <span class="option-text">Design e criatividade</span>
+                        <span class="option-text" th:text="#{quiz.q1.opt2}">Design e criatividade</span>
                     </label>
                     <label class="option-label">
                         <input type="radio" name="skill" value="Gestao">
-                        <span class="option-text">Gestão e liderança</span>
+                        <span class="option-text" th:text="#{quiz.q1.opt3}">Gestão e liderança</span>
                     </label>
                     <label class="option-label">
                         <input type="radio" name="skill" value="Hardware">
-                        <span class="option-text">Hardware / infraestrutura</span>
+                        <span class="option-text" th:text="#{quiz.q1.opt4}">Hardware / infraestrutura</span>
                     </label>
                 </div>
             </div>
@@ -77,24 +82,24 @@
             <div class="quiz-card" style="animation-delay: 0.2s;">
                 <div class="question-header">
                     <span class="question-number">2</span>
-                    <h2>Que área mais te interessa?</h2>
+                    <h2 th:text="#{quiz.q2}">Que área mais te interessa?</h2>
                 </div>
                 <div class="options-group">
                     <label class="option-label">
                         <input type="radio" name="interest" value="Mobile" required>
-                        <span class="option-text">Desenvolvimento Mobile</span>
+                        <span class="option-text" th:text="#{quiz.q2.opt1}">Desenvolvimento Mobile</span>
                     </label>
                     <label class="option-label">
                         <input type="radio" name="interest" value="Web">
-                        <span class="option-text">Desenvolvimento Web</span>
+                        <span class="option-text" th:text="#{quiz.q2.opt2}">Desenvolvimento Web</span>
                     </label>
                     <label class="option-label">
                         <input type="radio" name="interest" value="IA">
-                        <span class="option-text">Inteligência Artificial</span>
+                        <span class="option-text" th:text="#{quiz.q2.opt3}">Inteligência Artificial</span>
                     </label>
                     <label class="option-label">
                         <input type="radio" name="interest" value="Cloud">
-                        <span class="option-text">Cloud & DevOps</span>
+                        <span class="option-text" th:text="#{quiz.q2.opt4}">Cloud & DevOps</span>
                     </label>
                 </div>
             </div>
@@ -103,27 +108,27 @@
             <div class="quiz-card" style="animation-delay: 0.3s;">
                 <div class="question-header">
                     <span class="question-number">3</span>
-                    <h2>Qual seu maior objetivo?</h2>
+                    <h2 th:text="#{quiz.q3}">Qual seu maior objetivo?</h2>
                 </div>
                 <div class="options-group">
                     <label class="option-label">
                         <input type="radio" name="goal" value="Mercado" required>
-                        <span class="option-text">Entrar rápido no mercado</span>
+                        <span class="option-text" th:text="#{quiz.q3.opt1}">Entrar rápido no mercado</span>
                     </label>
                     <label class="option-label">
                         <input type="radio" name="goal" value="Carreira">
-                        <span class="option-text">Crescer e se especializar</span>
+                        <span class="option-text" th:text="#{quiz.q3.opt2}">Crescer e se especializar</span>
                     </label>
                     <label class="option-label">
                         <input type="radio" name="goal" value="Empreender">
-                        <span class="option-text">Criar um produto/empresa</span>
+                        <span class="option-text" th:text="#{quiz.q3.opt3}">Criar um produto/empresa</span>
                     </label>
                 </div>
             </div>
 
             <!-- Submit Button -->
             <div class="submit-section">
-                <button type="submit" class="submit-button">Descobrir Minha Trilha ✔</button>
+                <button type="submit" class="submit-button" th:text="#{quiz.submit}">Descobrir Minha Trilha ✔</button>
             </div>
         </form>
     </main>

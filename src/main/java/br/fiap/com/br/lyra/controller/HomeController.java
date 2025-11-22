@@ -34,10 +34,9 @@ public class HomeController {
         String email = auth.getName(); 
         User user = userService.findByEmail(email);
 
-        var quiz = quizService.getLastQuizByUser(user.getId());
-
+        var quizDTO = quizService.getLastQuizDTO(user.getId());
+        model.addAttribute("quiz", quizDTO);
         model.addAttribute("user", user);
-        model.addAttribute("quiz", quiz);
 
         return "home";
     }

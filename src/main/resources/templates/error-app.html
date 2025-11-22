@@ -1,12 +1,13 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
-    <title th:text="${title}">Erro - Aplicação</title>
+    <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title th:text="#{error.title}">Erro - Aplicação</title>
     <link rel="stylesheet" th:href="@{/css/error-app.css}">
 </head>
 <body>
-    <!-- Background Elements -->
+    <!-- Background Effects -->
     <div class="blob blob-1"></div>
     <div class="blob blob-2"></div>
     <div class="particle"></div>
@@ -14,51 +15,56 @@
     <div class="particle"></div>
     <div class="particle"></div>
 
-    <!-- Main Error Container -->
+    <!-- Error Content -->
     <div class="error-container">
-        <div class="robot-container">
-            <svg class="robot-icon broken-robot" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
-                <!-- Robot Head -->
-                <rect x="50" y="40" width="100" height="80" rx="12" fill="#7c3aed" opacity="0.8"/>
-                <circle cx="75" cy="70" r="8" fill="#d946ef"/>
-                <circle cx="125" cy="70" r="8" fill="#d946ef"/>
-                <!-- Broken eye with X -->
-                <line x1="120" y1="65" x2="130" y2="75" stroke="#ff4444" stroke-width="3" stroke-linecap="round"/>
-                <line x1="130" y1="65" x2="120" y2="75" stroke="#ff4444" stroke-width="3" stroke-linecap="round"/>
-                <!-- Sad mouth -->
-                <path d="M 75 95 Q 100 85 125 95" stroke="#9d4edd" stroke-width="3" fill="none" stroke-linecap="round"/>
-                
-                <!-- Antenna (broken) -->
-                <line x1="100" y1="40" x2="95" y2="20" stroke="#a855f7" stroke-width="3" stroke-linecap="round"/>
-                <circle cx="95" cy="17" r="5" fill="#d946ef"/>
-                <line x1="94" y1="12" x2="96" y2="22" stroke="#ff4444" stroke-width="2"/>
-                
-                <!-- Body -->
-                <rect x="60" y="120" width="80" height="60" rx="8" fill="#7c3aed" opacity="0.7"/>
-                <circle cx="85" cy="145" r="6" fill="#9d4edd"/>
-                <circle cx="115" cy="145" r="6" fill="#9d4edd"/>
-                
-                <!-- Arms (broken/disconnected) -->
-                <rect x="25" y="130" width="30" height="12" rx="6" fill="#a855f7" opacity="0.7" transform="rotate(-15 40 136)"/>
-                <rect x="145" y="130" width="30" height="12" rx="6" fill="#a855f7" opacity="0.7" transform="rotate(15 160 136)"/>
-                
-                <!-- Sparks/Error indicators -->
-                <circle cx="150" cy="50" r="3" fill="#fbbf24" opacity="0.8">
-                    <animate attributeName="opacity" values="0.8;0.2;0.8" dur="1s" repeatCount="indefinite"/>
+        <div class="robot-wrapper">
+            <svg class="robot-icon" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
+                <!-- Corpo do robô (mesma estética das duas versões) -->
+                <rect x="50" y="50" width="100" height="90" rx="15" fill="url(#robotGradient)" opacity="0.9"/>
+                <rect x="65" y="70" width="70" height="50" rx="8" fill="#1a0f3f" opacity="0.8"/>
+                <circle cx="85" cy="90" r="6" fill="#ef4444">
+                    <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
                 </circle>
-                <circle cx="160" cy="55" r="2" fill="#fbbf24" opacity="0.6">
-                    <animate attributeName="opacity" values="0.6;0.1;0.6" dur="1.2s" repeatCount="indefinite"/>
+                <circle cx="115" cy="90" r="6" fill="#ef4444">
+                    <animate attributeName="opacity" values="1;0.3;1" dur="1.5s" repeatCount="indefinite"/>
                 </circle>
-                <circle cx="155" cy="63" r="2.5" fill="#fbbf24" opacity="0.7">
-                    <animate attributeName="opacity" values="0.7;0.15;0.7" dur="0.9s" repeatCount="indefinite"/>
+                <path d="M 80 110 Q 100 100 120 110" stroke="#7c3aed" stroke-width="3" fill="none" stroke-linecap="round"/>
+                <line x1="100" y1="50" x2="100" y2="25" stroke="#a855f7" stroke-width="4" stroke-linecap="round"/>
+                <line x1="100" y1="35" x2="110" y2="30" stroke="#ef4444" stroke-width="2" stroke-linecap="round"/>
+                <circle cx="100" cy="22" r="6" fill="#d946ef"/>
+                <rect x="30" y="80" width="20" height="40" rx="10" fill="#9d4edd" opacity="0.8"/>
+                <rect x="150" y="80" width="20" height="40" rx="10" fill="#9d4edd" opacity="0.8"/>
+                <rect x="65" y="140" width="25" height="45" rx="8" fill="#7c3aed" opacity="0.7"/>
+                <rect x="110" y="140" width="25" height="45" rx="8" fill="#7c3aed" opacity="0.7"/>
+                <circle cx="100" cy="115" r="10" stroke="#fbbf24" stroke-width="2" fill="none" opacity="0.8"/>
+                <text x="100" y="122" font-size="16" fill="#fbbf24" text-anchor="middle" font-weight="bold">!</text>
+
+                <!-- Sparks -->
+                <circle cx="45" cy="65" r="3" fill="#fbbf24">
+                    <animate attributeName="r" values="3;5;3" dur="0.8s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" values="0.8;0.3;0.8" dur="0.8s" repeatCount="indefinite"/>
                 </circle>
+                <circle cx="155" cy="70" r="2.5" fill="#fbbf24">
+                    <animate attributeName="r" values="2.5;4;2.5" dur="1s" repeatCount="indefinite"/>
+                    <animate attributeName="opacity" values="0.7;0.2;0.7" dur="1s" repeatCount="indefinite"/>
+                </circle>
+
+                <defs>
+                    <linearGradient id="robotGradient" x1="0%" y1="0%" x2="100%" y2="100%">
+                        <stop offset="0%" style="stop-color:#7c3aed;stop-opacity:1" />
+                        <stop offset="100%" style="stop-color:#d946ef;stop-opacity:1" />
+                    </linearGradient>
+                </defs>
             </svg>
         </div>
 
-        <h1 class="error-title" th:text="${title}">Oops! Algo deu errado</h1>
-        <p class="error-message" th:text="${message}">Nosso robô encontrou um problema. Por favor, tente novamente mais tarde.</p>
-        
-        <a href="/" class="back-button">Voltar ao Início</a>
+        <h1 class="error-title" th:text="#{error.heading}">Oops! Algo deu errado</h1>
+        <p class="error-description" th:text="#{error.message}">Nosso robô encontrou um problema. Por favor, tente novamente mais tarde.</p>
+
+        <div class="button-group">
+            <a href="/" class="btn btn-primary" th:text="#{error.home}">← Página Inicial</a>
+            <a href="javascript:history.back()" class="btn btn-secondary" th:text="#{error.back}">Voltar</a>
+        </div>
     </div>
 </body>
 </html>

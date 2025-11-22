@@ -1,18 +1,14 @@
 package br.fiap.com.br.lyra.controller;
 
-import br.fiap.com.br.lyra.model.CareerTrail;
 import br.fiap.com.br.lyra.model.User;
-import br.fiap.com.br.lyra.repository.QuizRepository;
 import br.fiap.com.br.lyra.service.CareerTrailService;
+import br.fiap.com.br.lyra.service.QuizService;
 import br.fiap.com.br.lyra.service.UserService;
 import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
-
-import java.time.Instant;
-
-import org.springframework.data.domain.PageRequest;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -23,13 +19,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 public class DashboardController {
 
     private final UserService userService;
-    private final QuizRepository quizRepository;
+    private final QuizService quizService;
     private final CareerTrailService careerTrailService;
 
-    public record CareerTrailDTO(String profile, String content, Instant createdAt) {}
-
-
     @GetMapping("/dashboard")
+    @Transactional(readOnly = true)
     public String dashboard(HttpSession session, Model model) {
 
         var auth = SecurityContextHolder.getContext().getAuthentication();
@@ -44,8 +38,8 @@ public class DashboardController {
         model.addAttribute("user", user);
 
         // Último quiz
-        quizRepository.findTopByUserOrderByCreatedAtDesc(user)
-                .ifPresent(q -> model.addAttribute("quiz", q));
+        var quizDTO = quizService.getLastQuizDTO(user.getId());
+                model.addAttribute("quiz", quizDTO);
 
         // Última trilha de carreira — agora DTO
         var careerTrailDTO = careerTrailService.findLatestByUser(user.getId());

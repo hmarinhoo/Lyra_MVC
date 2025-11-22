@@ -2,6 +2,7 @@ package br.fiap.com.br.lyra.model;
 
 import org.hibernate.annotations.CreationTimestamp;
 
+import jakarta.persistence.Basic;
 import jakarta.persistence.Column;
 import jakarta.persistence.Entity;
 import jakarta.persistence.FetchType;
@@ -11,7 +12,6 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
-import jakarta.persistence.Basic;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -37,6 +37,7 @@ public class CareerTrail {
     private String profile;
 
     @Column(columnDefinition = "TEXT")
+    @Basic(fetch = FetchType.EAGER)
     private String content;
 
     @CreationTimestamp

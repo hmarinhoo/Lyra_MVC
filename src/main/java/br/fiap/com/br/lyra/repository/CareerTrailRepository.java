@@ -1,5 +1,6 @@
 package br.fiap.com.br.lyra.repository;
 
+import br.fiap.com.br.lyra.dto.CareerTrailDTO;
 import br.fiap.com.br.lyra.dto.CareerTrailListDTO;
 import br.fiap.com.br.lyra.model.CareerTrail;
 
@@ -21,20 +22,24 @@ public interface CareerTrailRepository extends JpaRepository<CareerTrail, Long> 
     List<CareerTrail> findByUserIdOrderByCreatedAtDesc(Long userId);
 
     @Query("""
-        SELECT c FROM CareerTrail c 
-        JOIN FETCH c.user
-        WHERE c.user.id = :userId
-        ORDER BY c.createdAt DESC
-    """)
-    List<CareerTrail> findLatestWithUser(Long userId);
-
-    @Query("""
-        SELECT new br.fiap.com.br.lyra.dto.CareerTrailListDTO(
-            c.id, c.profile, c.createdAt
+        SELECT new br.fiap.com.br.lyra.dto.CareerTrailDTO(
+            c.profile,
+            c.content,
+            c.createdAt
         )
         FROM CareerTrail c
         WHERE c.user.id = :userId
         ORDER BY c.createdAt DESC
     """)
-    Page<CareerTrailListDTO> findAllLight(Long userId, Pageable pageable);
+    CareerTrailDTO findLatestDTO(Long userId);
+
+    // @Query("""
+    //     SELECT new br.fiap.com.br.lyra.dto.CareerTrailListDTO(
+    //         c.id, c.profile, c.createdAt
+    //     )
+    //     FROM CareerTrail c
+    //     WHERE c.user.id = :userId
+    //     ORDER BY c.createdAt DESC
+    // """)
+    // Page<CareerTrailListDTO> findAllLight(Long userId, Pageable pageable);
 }
