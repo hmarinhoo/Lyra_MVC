@@ -17,7 +17,6 @@
 
     <!-- Error Content -->
     <div class="error-box">
-        <div class="status-badge">🤖 Sistema Indisponível</div>
 
         <div class="robot-wrapper">
             <svg class="robot-graphic" viewBox="0 0 200 200" fill="none" xmlns="http://www.w3.org/2000/svg">
@@ -78,16 +77,14 @@
             </svg>
         </div>
 
-        <h1 class="error-title" th:text="${title}">Sistema Temporariamente Offline</h1>
-        <p class="error-description" th:text="${message}">Encontramos um problema técnico. Nossa equipe já foi notificada e está trabalhando para resolver.</p>
-        
+        <h1 class="error-title" th:text="#{offline.heading}">Sistema Temporariamente Offline</h1>
+        <p class="error-description" th:text="#{offline.message}">
+            Encontramos um problema técnico. Nossa equipe já foi notificada e está trabalhando para resolver.
+        </p>
+
         <div class="button-group">
-            <a href="/" class="btn btn-primary">
-                ← Página Inicial
-            </a>
-            <a href="javascript:history.back()" class="btn btn-secondary">
-                Voltar
-            </a>
+            <a href="/" class="btn btn-primary" th:text="#{offline.home}">← Página Inicial</a>
+            <a href="javascript:history.back()" class="btn btn-secondary" th:text="#{offline.back}">Voltar</a>
         </div>
     </div>
 </body>

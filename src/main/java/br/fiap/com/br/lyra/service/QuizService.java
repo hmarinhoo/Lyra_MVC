@@ -1,11 +1,13 @@
 package br.fiap.com.br.lyra.service;
 
+import br.fiap.com.br.lyra.dto.QuizDTO;
 import br.fiap.com.br.lyra.model.Quiz;
 import br.fiap.com.br.lyra.model.User;
 import br.fiap.com.br.lyra.repository.QuizRepository;
 import br.fiap.com.br.lyra.repository.UserRepository;
-import jakarta.transaction.Transactional;
+
 import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
 
 import java.time.Instant;
 import java.util.List;
@@ -67,4 +69,10 @@ public class QuizService {
             quizRepository.deleteById(quizId);
         }
     }
+
+    @Transactional(readOnly = true)
+    public QuizDTO getLastQuizDTO(Long userId) {
+        return quizRepository.findLatestQuizDTO(userId);
+    }
+
 }

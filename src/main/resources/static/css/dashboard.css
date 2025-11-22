@@ -63,6 +63,57 @@ body::after {
     box-shadow: 0 4px 20px rgba(124, 58, 237, 0.1);
 }
 
+/* --- Estilização nova da trilha --- */
+.language-selector {
+    display: flex;
+    gap: 12px;
+    margin-bottom: 1rem;
+}
+
+.lang-btn {
+    background: #5b21b6;
+    border: none;
+    color: white;
+    padding: 10px 18px;
+    border-radius: 10px;
+    cursor: pointer;
+    font-size: 15px;
+    transition: 0.2s ease;
+    opacity: 0.6;
+}
+
+.lang-btn.active,
+.lang-btn:hover {
+    opacity: 1;
+    background: #9333ea;
+}
+
+.trail-block {
+    background: rgba(255,255,255,0.05);
+    padding: 1.5rem;
+    border-radius: 12px;
+    line-height: 1.75;
+    color: #e2e8f0;
+    box-shadow: 0 0 12px rgba(147,51,234,0.25);
+    border-left: 4px solid #c084fc;
+    white-space: pre-wrap;
+    overflow-wrap: break-word;
+}
+
+.trail-block h2,
+.trail-block h3 {
+    color: #c084fc;
+}
+
+.trail-block ul {
+    margin: 1rem 0;
+    padding-left: 1.2rem;
+}
+
+.trail-block ul li {
+    margin-bottom: .5rem;
+}
+
 .logo {
     font-size: 1.5rem;
     font-weight: 800;

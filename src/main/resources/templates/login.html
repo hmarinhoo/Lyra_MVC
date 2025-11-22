@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login - Lyra</title>
+    <title th:text="#{login.title}">Login - Lyra</title>
     <link th:href="@{/css/login.css}" rel="stylesheet">
 </head>
 <body>
@@ -13,31 +13,34 @@
     <div class="login-container">
         <div class="login-card">
             <h1>Lyra</h1>
-            <p>Bem-vindo de volta</p>
+            <p th:text="#{login.welcome}">Welcome back</p>
 
             <!-- Mensagens de erro/sucesso -->
-            <div th:if="${param.error}" class="error-message">
-                E-mail ou senha inválidos.
+            <div th:if="${param.error}" class="error-message" th:text="#{login.error}">
+                Invalid email or password.
             </div>
-            <div th:if="${param.logout}" class="success-message">
-                Você saiu com sucesso.
+            <div th:if="${param.logout}" class="success-message" th:text="#{login.logout}">
+                You have successfully logged out.
             </div>
 
             <form th:action="@{/login}" method="post">
                 <div class="form-group">
-                    <label for="email">E-mail</label>
-                    <input type="email" id="email" name="username" required placeholder="seu@email.com">
+                    <label for="email" th:text="#{login.email}">Email</label>
+                    <input type="email" id="email" name="username" required placeholder="email@example.com">
                 </div>
 
                 <div class="form-group">
-                    <label for="password">Senha</label>
+                    <label for="password" th:text="#{login.password}">Password</label>
                     <input type="password" id="password" name="password" required placeholder="••••••••">
                 </div>
 
-                <button type="submit">Entrar</button>
+                <button type="submit" th:text="#{login.submit}">Login</button>
             </form>
 
-            <p class="footer-link">Não tem conta? <a th:href="@{/register}">Cadastre-se agora</a></p>
+            <p class="footer-link">
+                <span th:text="#{login.noAccount}">Don't have an account?</span>
+                <a th:href="@{/register}" th:text="#{login.register}">Register now</a>
+            </p>
         </div>
     </div>
 </body>

@@ -3,22 +3,42 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Meu Perfil</title>
+    <title th:text="#{profile.title}">Meu Perfil</title>
     <link th:href="@{/css/profile.css}" rel="stylesheet">
+    <link th:href="@{/css/home.css}" rel="stylesheet">
 </head>
 <body>
+    <!-- Navigation Header -->
+    <header class="navbar">
+        <div class="navbar-content">
+             <nav class="nav-links">
+                 <!-- Language Switch -->
+                 <a th:href="@{/profile(lang='pt_BR')}" class="card-button primary">🇧🇷 Português</a>
+                 <a th:href="@{/profile(lang='en_US')}" class="card-button primary">🇺🇸 English</a>
+             </nav>
+            <div class="logo">
+                <h1>Lyra</h1>
+            </div>
+            <nav class="nav-links">
+                <a th:href="@{/dashboard}" class="nav-link" th:text="#{nav.dashboard}">Dashboard</a>
+                <a th:href="@{/profile}" class="nav-link" th:text="#{nav.profile}">Profile</a>
+
+            </nav>
+        </div>
+    </header>
+
     <div class="container">
         <div class="header">
-            <h1>Meu Perfil</h1>
-            <p>Gerencie suas informações pessoais</p>
+            <h1 th:text="#{profile.title}">Meu Perfil</h1>
+            <p th:text="#{profile.subtitle}">Gerencie suas informações pessoais</p>
         </div>
 
         <div th:if="${param.success}" class="alert alert-success">
-            <p>✓ Perfil atualizado com sucesso!</p>
+            <p th:text="#{profile.updatedSuccess}">✓ Perfil atualizado com sucesso!</p>
         </div>
 
         <div th:if="${param.accountDeleted}" class="alert alert-info">
-            <p>✓ Conta excluída com sucesso!</p>
+            <p th:text="#{profile.accountDeleted}">✓ Conta excluída com sucesso!</p>
         </div>
 
         <div class="profile-card">
@@ -31,37 +51,44 @@
 
             <form th:action="@{/profile/update}" method="post">
                 <div class="form-group">
-                    <label for="name">Nome</label>
+                    <label for="name" th:text="#{profile.label.name}">Nome</label>
                     <input type="text" id="name" name="name" th:value="${user.name}" required placeholder="Digite seu nome completo"/>
                 </div>
 
                 <div class="form-group">
-                    <label for="experienceLevel">Nível de Experiência</label>
+                    <label for="experienceLevel" th:text="#{profile.label.experience}">Nível de Experiência</label>
                     <input type="text" id="experienceLevel" name="experienceLevel" th:value="${user.experienceLevel}" placeholder="Ex: Iniciante, Intermediário, Avançado"/>
                 </div>
 
                 <div class="form-group">
-                    <label for="interests">Interesses</label>
+                    <label for="interests" th:text="#{profile.label.interests}">Interesses</label>
                     <textarea id="interests" name="interests" th:text="${user.interests}" placeholder="Descreva seus interesses e áreas de interesse..."></textarea>
                 </div>
 
                 <div class="form-group">
-                    <label for="locale">Localização</label>
+                    <label for="locale" th:text="#{profile.label.locale}">Localização</label>
                     <input type="text" id="locale" name="locale" th:value="${user.locale}" placeholder="Ex: pt-BR, en-US"/>
                 </div>
 
                 <div class="button-group">
-                    <button type="submit">Atualizar Perfil</button>
+                    <button type="submit" th:text="#{profile.button.update}">Atualizar Perfil</button>
                 </div>
             </form>
 
+            <div class="button-group">
+                <a th:href="@{/home}">
+                    <button type="button" th:text="#{profile.button.backHome}">Voltar ao Home</button>
+                </a>
+            </div>
+
             <div class="logout-section">
                 <a th:href="@{/logout}" style="flex: 1; text-decoration: none;">
-                    <button type="button" class="btn-logout" style="width: 100%;">Sair da Conta</button>
+                    <button type="button" class="btn-logout" style="width: 100%;" th:text="#{profile.button.logout}">Sair da Conta</button>
                 </a>
                 
-                <form th:action="@{/profile/delete}" method="post" style="flex: 1;" onsubmit="return confirm('⚠️ Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.');">
-                    <button type="submit" class="btn-delete" style="width: 100%;">Excluir Conta</button>
+                <form th:action="@{/profile/delete}" method="post" style="flex: 1;" 
+                      onsubmit="return confirm('⚠️ Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.');">
+                    <button type="submit" class="btn-delete" style="width: 100%;" th:text="#{profile.button.deleteAccount}">Excluir Conta</button>
                 </form>
             </div>
         </div>

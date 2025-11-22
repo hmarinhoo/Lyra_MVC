@@ -1,10 +1,10 @@
 <!DOCTYPE html>
-<html lang="pt-BR">
+<html lang="pt-BR" xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Sobre o Lyra - Mentor Digital de Carreira</title>
-    <link rel="stylesheet" href="/css/about.css">
+    <title th:text="#{about.title}">Sobre o Lyra - Mentor Digital de Carreira</title>
+    <link th:href="@{/css/about.css}" rel="stylesheet">
 </head>
 <body>
     <!-- Animated Background -->
@@ -20,19 +20,24 @@
 
     <!-- Header -->
     <header>
+        <!-- Language Switcher -->
+        <nav class="nav-buttons">
+            <a th:href="@{/about(lang='pt_BR')}"><button class="btn-register">🇧🇷 Português</button></a>
+            <a th:href="@{/about(lang='en_US')}"><button class="btn-register">🇺🇸 English</button></a>
+        </nav>
         <div class="logo">✨ Lyra</div>
         <nav class="nav-buttons">
-            <a href="/"><button class="btn-nav">Início</button></a>
-            <a href="/login"><button class="btn-nav">Login</button></a>
-            <a href="/register"><button class="btn-register">Cadastro</button></a>
+            <a th:href="@{/}"><button class="btn-nav" th:text="#{nav.home}">Início</button></a>
+            <a th:href="@{/login}"><button class="btn-nav" th:text="#{login.button}">Login</button></a>
+            <a th:href="@{/register}"><button class="btn-register" th:text="#{register.button}">Cadastro</button></a>
         </nav>
     </header>
 
     <!-- Hero Section -->
     <section class="hero-about">
         <div class="hero-content">
-            <h1>Sobre o <span class="highlight-gradient">Lyra</span></h1>
-            <p class="subtitle">Transformando carreiras através de inteligência artificial e propósito social</p>
+            <h1 th:text="#{about.hero.title}">Sobre o <span class="highlight-gradient">Lyra</span></h1>
+            <p class="subtitle" th:text="#{about.hero.subtitle}">Transformando carreiras através de inteligência artificial e propósito social</p>
         </div>
     </section>
 
@@ -42,22 +47,22 @@
         <section class="section mission-section">
             <div class="section-content">
                 <div class="text-column">
-                    <h2>Nossa Missão</h2>
-                    <p>
-                        O <strong>Lyra</strong> é uma plataforma revolucionária desenvolvida para guiar estudantes e profissionais de tecnologia na descoberta de seus perfis, interesses e trilhas recomendadas na área de TI.
+                    <h2 th:text="#{about.mission.title}">Nossa Missão</h2>
+                    <p th:text="#{about.mission.p1}">
+                        O <strong>Lyra</strong> é uma plataforma revolucionária desenvolvida para guiar estudantes...
                     </p>
-                    <p>
-                        Através de um quiz inteligente e análise comportamental, identificamos suas preferências, nível de conhecimento e estilo de aprendizado, gerando uma trilha personalizada que se adapta continuamente.
+                    <p th:text="#{about.mission.p2}">
+                        Através de um quiz inteligente e análise comportamental, identificamos suas preferências...
                     </p>
-                    <p class="highlight-text">
+                    <p class="highlight-text" th:text="#{about.mission.p3}">
                         Nosso objetivo é <strong>guiar sua jornada de carreira com clareza, precisão e propósito social</strong>.
                     </p>
                 </div>
                 <div class="visual-column">
                     <div class="feature-box">
                         <div class="box-icon">🎯</div>
-                        <h3>Personalização Inteligente</h3>
-                        <p>Quiz adaptativo que descobre seu potencial único</p>
+                        <h3 th:text="#{about.feature.personalization.title}">Personalização Inteligente</h3>
+                        <p th:text="#{about.feature.personalization.desc}">Quiz adaptativo que descobre seu potencial único</p>
                     </div>
                 </div>
             </div>
@@ -65,54 +70,54 @@
 
         <!-- Technology Section -->
         <section class="section tech-section">
-            <h2>Tecnologia de Ponta</h2>
+            <h2 th:text="#{about.tech.title}">Tecnologia de Ponta</h2>
             <div class="tech-grid">
                 <div class="tech-card">
                     <div class="tech-icon">⚙️</div>
-                    <h3>Spring Boot & Java</h3>
-                    <p>Backend robusto e escalável para processamento de dados</p>
+                    <h3 th:text="#{about.tech.springboot}">Spring Boot & Java</h3>
+                    <p th:text="#{about.tech.springboot.desc}">Backend robusto e escalável para processamento de dados</p>
                 </div>
                 <div class="tech-card">
                     <div class="tech-icon">🗄️</div>
-                    <h3>JPA & Banco de Dados</h3>
-                    <p>Persistência de dados segura e eficiente</p>
+                    <h3 th:text="#{about.tech.jpa}">JPA & Banco de Dados</h3>
+                    <p th:text="#{about.tech.jpa.desc}">Persistência de dados segura e eficiente</p>
                 </div>
                 <div class="tech-card">
                     <div class="tech-icon">🔄</div>
-                    <h3>RabbitMQ</h3>
-                    <p>Processamento assíncrono e comunicação entre serviços</p>
+                    <h3 th:text="#{about.tech.rabbitmq}">RabbitMQ</h3>
+                    <p th:text="#{about.tech.rabbitmq.desc}">Processamento assíncrono e comunicação entre serviços</p>
                 </div>
                 <div class="tech-card">
                     <div class="tech-icon">🤖</div>
-                    <h3>IA Generativa</h3>
-                    <p>Recomendações inteligentes e personalizadas baseadas em IA</p>
+                    <h3 th:text="#{about.tech.ai}">IA Generativa</h3>
+                    <p th:text="#{about.tech.ai.desc}">Recomendações inteligentes e personalizadas baseadas em IA</p>
                 </div>
             </div>
         </section>
 
         <!-- Values Section -->
         <section class="section values-section">
-            <h2>Nossos Valores</h2>
+            <h2 th:text="#{about.values.title}">Nossos Valores</h2>
             <div class="values-grid">
                 <div class="value-card">
                     <div class="value-number">01</div>
-                    <h3>Inovação</h3>
-                    <p>Utilizamos tecnologias de ponta para criar experiências únicas</p>
+                    <h3 th:text="#{about.values.innovation}">Inovação</h3>
+                    <p th:text="#{about.values.innovation.desc}">Utilizamos tecnologias de ponta para criar experiências únicas</p>
                 </div>
                 <div class="value-card">
                     <div class="value-number">02</div>
-                    <h3>Inclusão</h3>
-                    <p>Democratizando acesso a educação e oportunidades de carreira</p>
+                    <h3 th:text="#{about.values.inclusion}">Inclusão</h3>
+                    <p th:text="#{about.values.inclusion.desc}">Democratizando acesso a educação e oportunidades de carreira</p>
                 </div>
                 <div class="value-card">
                     <div class="value-number">03</div>
-                    <h3>Impacto Social</h3>
-                    <p>Alinhando crescimento profissional com os ODS</p>
+                    <h3 th:text="#{about.values.social}">Impacto Social</h3>
+                    <p th:text="#{about.values.social.desc}">Alinhando crescimento profissional com os ODS</p>
                 </div>
                 <div class="value-card">
                     <div class="value-number">04</div>
-                    <h3>Personalização</h3>
-                    <p>Cada trilha é única como você</p>
+                    <h3 th:text="#{about.values.personalization}">Personalização</h3>
+                    <p th:text="#{about.values.personalization.desc}">Cada trilha é única como você</p>
                 </div>
             </div>
         </section>
@@ -120,11 +125,11 @@
         <!-- CTA Section -->
         <section class="section cta-section">
             <div class="cta-content">
-                <h2>Pronto para Transformar Sua Carreira?</h2>
-                <p>Descubra sua trilha personalizada com Lyra</p>
+                <h2 th:text="#{about.cta.title}">Pronto para Transformar Sua Carreira?</h2>
+                <p th:text="#{about.cta.subtitle}">Descubra sua trilha personalizada com Lyra</p>
                 <div class="cta-buttons">
-                    <a href="/register"><button class="btn-primary">Começar Agora</button></a>
-                    <a href="/"><button class="btn-secondary">Voltar ao Início</button></a>
+                    <a th:href="@{/register}"><button class="btn-primary" th:text="#{home.hero.getStarted}">Começar Agora</button></a>
+                    <a th:href="@{/}"><button class="btn-secondary" th:text="#{nav.home}">Voltar ao Início</button></a>
                 </div>
             </div>
         </section>
@@ -132,7 +137,7 @@
 
     <!-- Footer -->
     <footer>
-        <p>&copy; 2025 Lyra - Seu Mentor Digital de Carreira. Todos os direitos reservados.</p>
+        <p th:text="#{footer.text}">&copy; 2025 Lyra - Seu Mentor Digital de Carreira. Todos os direitos reservados.</p>
     </footer>
 </body>
 </html>

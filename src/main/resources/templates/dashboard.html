@@ -3,11 +3,12 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Dashboard - Lyra</title>
+    <title th:text="#{dashboard.title}">Dashboard - Lyra</title>
     <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <link rel="stylesheet" th:href="@{/css/home.css}">
     <script>
         function confirmRedo() {
-            if(confirm("⚠️ Todas as respostas do quiz e a trilha atual serão deletadas. Deseja continuar?")) {
+            if(confirm("#{dashboard.redo.confirm}")) {
                 window.location.href = "/quiz/redo";
             }
         }
@@ -16,11 +17,15 @@
 <body>
     <!-- Navbar -->
     <nav class="navbar">
+        <nav class="nav-links">
+            <!-- Language Switch -->
+            <a th:href="@{/dashboard(lang='pt_BR')}" class="card-button primary">🇧🇷 Português</a>
+            <a th:href="@{/dashboard(lang='en_US')}" class="card-button primary">🇺🇸 English</a>
+        </nav>
         <div class="logo">✨ Lyra</div>
         <div class="nav-links">
-            <a href="/home">Home</a>
-            <a href="/profile">Perfil</a>
-            <a href="/logout">Sair</a>
+            <a th:href="@{/home}" th:text="#{nav.home}">Home</a>
+            <a th:href="@{/profile}" th:text="#{nav.profile}">Perfil</a>
         </div>
     </nav>
 
@@ -28,15 +33,15 @@
     <main class="dashboard-container">
         <!-- Welcome Header -->
         <div class="welcome-header">
-            <h1>Bem-vindo, <span th:text="${user.name}">Usuário</span>! 👋</h1>
+            <h1 th:text="#{dashboard.welcome} + ', ' + ${user.name} + ' 👋'">Bem-vindo, Usuário! 👋</h1>
             <div class="user-badges">
                 <div class="badge">
                     <div class="badge-icon">📊</div>
-                    <span>Nível: <strong th:text="${user.experienceLevel}">Intermediário</strong></span>
+                    <span th:text="#{dashboard.level} + ': ' + ${user.experienceLevel}">Nível: Intermediário</span>
                 </div>
                 <div class="badge">
                     <div class="badge-icon">💡</div>
-                    <span>Interesses: <strong th:text="${user.interests}">Programação, IA</strong></span>
+                    <span th:text="#{dashboard.interests} + ': ' + ${user.interests}">Interesses: Programação, IA</span>
                 </div>
             </div>
         </div>
@@ -46,10 +51,10 @@
             <div class="card">
                 <h2>
                     <div class="card-icon">🚀</div>
-                    Sua Trilha de Carreira Personalizada
+                    <span th:text="#{dashboard.careerTrail}">Sua Trilha de Carreira Personalizada</span>
                 </h2>
                 <div class="trail-content" th:text="${careerTrail.content}">
-                    Aguarde enquanto a IA gera sua trilha personalizada...
+                    #{dashboard.trail.loading}
                 </div>
             </div>
         </section>
@@ -58,12 +63,12 @@
             <div class="card">
                 <h2>
                     <div class="card-icon">🚀</div>
-                    Trilha de Carreira
+                    <span th:text="#{dashboard.careerTrail}">Trilha de Carreira</span>
                 </h2>
                 <div class="empty-state">
                     <div class="empty-state-icon">🤖</div>
-                    <p>Sua trilha de carreira será gerada em breve pela IA.</p>
-                    <p>Complete o quiz para receber recomendações personalizadas!</p>
+                    <p th:text="#{dashboard.trail.pending}">Sua trilha de carreira será gerada em breve pela IA.</p>
+                    <p th:text="#{dashboard.completeQuiz}">Complete o quiz para receber recomendações personalizadas!</p>
                 </div>
             </div>
         </section>
@@ -73,24 +78,12 @@
             <div class="card">
                 <h2>
                     <div class="card-icon">📝</div>
-                    Respostas do Último Quiz
+                    <span th:text="#{dashboard.lastQuiz}">Respostas do Último Quiz</span>
                 </h2>
                 <div class="quiz-data">
                     <div class="quiz-item">
-                        <strong>🎯 Habilidade Principal</strong>
-                        <span>Lógica de Programação</span>
-                    </div>
-                    <div class="quiz-item">
-                        <strong>💼 Área de Interesse</strong>
-                        <span>Inteligência Artificial</span>
-                    </div>
-                    <div class="quiz-item">
-                        <strong>🎓 Objetivo</strong>
-                        <span>Crescimento de Carreira</span>
-                    </div>
-                    <div class="quiz-item">
-                        <strong>⏰ Disponibilidade</strong>
-                        <span>4-6 horas/semana</span>
+                        <strong>🎯</strong>
+                        <span th:text="${quiz.answersJson}">Lógica de Programação</span>
                     </div>
                 </div>
             </div>
@@ -101,13 +94,12 @@
             <div class="card">
                 <h2>
                     <div class="card-icon">🔄</div>
-                    Quer Recomeçar?
+                    <span th:text="#{dashboard.redoQuiz}">Quer Recomeçar?</span>
                 </h2>
-                <p style="margin-bottom: 1.5rem; color: #94a3b8; line-height: 1.6;">
-                    Refaça o quiz para gerar uma nova trilha de carreira personalizada. 
-                    Suas respostas anteriores serão substituídas.
+                <p style="margin-bottom: 1.5rem; color: #94a3b8; line-height: 1.6;" th:text="#{dashboard.redoQuizInfo}">
+                    Refaça o quiz para gerar uma nova trilha de carreira personalizada. Suas respostas anteriores serão substituídas.
                 </p>
-                <button class="redo-quiz-btn" onclick="confirmRedo()">
+                <button class="redo-quiz-btn" onclick="confirmRedo()" th:text="#{dashboard.redoQuizBtn}">
                     🔄 Refazer Quiz
                 </button>
             </div>
