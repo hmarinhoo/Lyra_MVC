@@ -1,0 +1,117 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Dashboard - Lyra</title>
+    <link rel="stylesheet" th:href="@{/css/dashboard.css}">
+    <script>
+        function confirmRedo() {
+            if(confirm("⚠️ Todas as respostas do quiz e a trilha atual serão deletadas. Deseja continuar?")) {
+                window.location.href = "/quiz/redo";
+            }
+        }
+    </script>
+</head>
+<body>
+    <!-- Navbar -->
+    <nav class="navbar">
+        <div class="logo">✨ Lyra</div>
+        <div class="nav-links">
+            <a href="/home">Home</a>
+            <a href="/profile">Perfil</a>
+            <a href="/logout">Sair</a>
+        </div>
+    </nav>
+
+    <!-- Main content -->
+    <main class="dashboard-container">
+        <!-- Welcome Header -->
+        <div class="welcome-header">
+            <h1>Bem-vindo, <span th:text="${user.name}">Usuário</span>! 👋</h1>
+            <div class="user-badges">
+                <div class="badge">
+                    <div class="badge-icon">📊</div>
+                    <span>Nível: <strong th:text="${user.experienceLevel}">Intermediário</strong></span>
+                </div>
+                <div class="badge">
+                    <div class="badge-icon">💡</div>
+                    <span>Interesses: <strong th:text="${user.interests}">Programação, IA</strong></span>
+                </div>
+            </div>
+        </div>
+
+        <!-- Career Trail -->
+        <section th:if="${careerTrail != null}">
+            <div class="card">
+                <h2>
+                    <div class="card-icon">🚀</div>
+                    Sua Trilha de Carreira Personalizada
+                </h2>
+                <div class="trail-content" th:text="${careerTrail.content}">
+                    Aguarde enquanto a IA gera sua trilha personalizada...
+                </div>
+            </div>
+        </section>
+
+        <section th:if="${careerTrail == null}">
+            <div class="card">
+                <h2>
+                    <div class="card-icon">🚀</div>
+                    Trilha de Carreira
+                </h2>
+                <div class="empty-state">
+                    <div class="empty-state-icon">🤖</div>
+                    <p>Sua trilha de carreira será gerada em breve pela IA.</p>
+                    <p>Complete o quiz para receber recomendações personalizadas!</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Último Quiz -->
+        <section th:if="${quiz != null}">
+            <div class="card">
+                <h2>
+                    <div class="card-icon">📝</div>
+                    Respostas do Último Quiz
+                </h2>
+                <div class="quiz-data">
+                    <div class="quiz-item">
+                        <strong>🎯 Habilidade Principal</strong>
+                        <span>Lógica de Programação</span>
+                    </div>
+                    <div class="quiz-item">
+                        <strong>💼 Área de Interesse</strong>
+                        <span>Inteligência Artificial</span>
+                    </div>
+                    <div class="quiz-item">
+                        <strong>🎓 Objetivo</strong>
+                        <span>Crescimento de Carreira</span>
+                    </div>
+                    <div class="quiz-item">
+                        <strong>⏰ Disponibilidade</strong>
+                        <span>4-6 horas/semana</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Refazer Quiz -->
+        <section>
+            <div class="card">
+                <h2>
+                    <div class="card-icon">🔄</div>
+                    Quer Recomeçar?
+                </h2>
+                <p style="margin-bottom: 1.5rem; color: #94a3b8; line-height: 1.6;">
+                    Refaça o quiz para gerar uma nova trilha de carreira personalizada. 
+                    Suas respostas anteriores serão substituídas.
+                </p>
+                <button class="redo-quiz-btn" onclick="confirmRedo()">
+                    🔄 Refazer Quiz
+                </button>
+            </div>
+        </section>
+    </main>
+</body>
+</html>

@@ -9,8 +9,8 @@ CREATE TABLE users (
     experience_level VARCHAR(255),
     interests VARCHAR(2000),
     locale VARCHAR(50),
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW() NOT NULL,
-    updated_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 -- =============================================
@@ -31,7 +31,7 @@ CREATE TABLE quizzes (
     user_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
     answers TEXT,
     profile VARCHAR(255),
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );
 
 -- =============================================
@@ -42,5 +42,5 @@ CREATE TABLE career_trails (
     user_id BIGINT REFERENCES users(id) ON DELETE SET NULL,
     profile VARCHAR(255),
     content TEXT,
-    created_at TIMESTAMP WITHOUT TIME ZONE DEFAULT NOW()
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP NOT NULL
 );

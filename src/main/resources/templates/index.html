@@ -1,15 +1,86 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
+<html lang="pt-BR">
 <head>
     <meta charset="UTF-8">
-    <title>GreenPath - Bem-vindo</title>
-    <link rel="stylesheet" th:href="@{/css/style.css}">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Lyra - Seu Mentor de Carreira Digital</title>
+    <link th:href="@{/css/index.css}" rel="stylesheet">
 </head>
 <body>
-    <h1>Bem-vindo ao GreenPath</h1>
-    <div>
-        <a th:href="@{/login}"><button>Login</button></a>
-        <a th:href="@{/register}"><button>Cadastro</button></a>
-    </div>
+    <!-- Decorative Blobs -->
+    <div class="gradient-blob blob-1"></div>
+    <div class="gradient-blob blob-2"></div>
+
+    <!-- Header -->
+    <header>
+        <div class="logo">✨ Lyra</div>
+        <nav class="nav-buttons">
+            <a href="/login"><button class="btn-login">Login</button></a>
+            <a href="/register"><button class="btn-register">Cadastro</button></a>
+        </nav>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <!-- Hero content agora em container separado -->
+        <div class="hero-content">
+            <span class="hero-badge">🚀 IA Generativa para Sua Carreira</span>
+            <h1>Seu Mentor Digital de Carreira</h1>
+            <p>Descubra trilhas personalizadas de aprendizado alinhadas ao futuro do trabalho e aos ODS. Lyra analisa seu perfil e gera um roteiro único para crescimento profissional e impacto social.</p>
+            <div class="hero-buttons">
+                <a href="/register"><button class="btn-primary">Começar Agora</button></a>
+                <a href="/about"><button class="btn-secondary">Saiba Mais</button></a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <!-- Features agora em seção separada com background e padding melhorado -->
+    <section class="features-section">
+        <div class="features-container">
+            <div class="features-header">
+                <h2>Por Que Escolher Lyra?</h2>
+                <p>Recursos poderosos para impulsionar sua carreira e gerar impacto social</p>
+            </div>
+
+            <div class="features">
+                <div class="feature-card">
+                    <div class="feature-icon">🧠</div>
+                    <h3>IA Generativa</h3>
+                    <p>Análise inteligente do seu perfil para recomendações personalizadas</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🌍</div>
+                    <h3>Alinhado aos ODS</h3>
+                    <p>Conecte seu crescimento aos Objetivos de Desenvolvimento Sustentável</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📊</div>
+                    <h3>Simulação 2030</h3>
+                    <p>Veja como seu mercado evolui e planeje sua carreira futura</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🎯</div>
+                    <h3>Trilhas Personalizadas</h3>
+                    <p>Cursos, certificações e habilidades recomendadas para você</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">📈</div>
+                    <h3>Painel de Impacto</h3>
+                    <p>Acompanhe seu progresso e impacto social em tempo real</p>
+                </div>
+
+                <div class="feature-card">
+                    <div class="feature-icon">🔄</div>
+                    <h3>Atualização Contínua</h3>
+                    <p>Trilha se adapta conforme você evolui e o mercado muda</p>
+                </div>
+            </div>
+        </div>
+    </section>
 </body>
 </html>

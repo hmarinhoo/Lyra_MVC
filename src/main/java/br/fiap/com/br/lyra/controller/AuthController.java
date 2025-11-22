@@ -1,68 +1,57 @@
 package br.fiap.com.br.lyra.controller;
 
-import br.fiap.com.br.lyra.model.User;
+import br.fiap.com.br.lyra.dto.UserDTO;
 import br.fiap.com.br.lyra.service.UserService;
-import jakarta.servlet.http.HttpSession;
 import lombok.RequiredArgsConstructor;
+import org.springframework.security.authentication.AuthenticationManager;
+import org.springframework.security.authentication.UsernamePasswordAuthenticationToken;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
- 
-
 @Controller
-@RequestMapping
 @RequiredArgsConstructor
 public class AuthController {
 
     private final UserService userService;
+    private final AuthenticationManager authenticationManager;
 
-    // ===== PÁGINA INICIAL =====
-    @GetMapping("/")
-    public String index() {
-        return "index"; // página com opção de login ou cadastro
-    }
 
-    // ===== LOGIN =====
+    // Página de login
     @GetMapping("/login")
     public String loginPage() {
         return "login";
     }
 
-    // ===== CADASTRO =====
+    // Página de registro
     @GetMapping("/register")
-    public String registerPage() {
+    public String registerPage(Model model) {
+        model.addAttribute("userDTO", new UserDTO());
         return "register";
     }
 
+    // Registro + autologin
     @PostMapping("/register")
-    public String register(@RequestParam("name") String name,
-                           @RequestParam("email") String email,
-                           @RequestParam("password") String password,
-                           Model model,
-                           HttpSession session) {
+    public String registerSubmit(@ModelAttribute UserDTO dto, Model model) {
+        try {
+            var user = userService.register(dto);
 
-        if (userService.findByEmail(email).isPresent()) {
-            model.addAttribute("error", "E-mail já cadastrado");
+            // AUTENTICAÇÃO REAL NO SPRING SECURITY
+            UsernamePasswordAuthenticationToken authToken =
+                    new UsernamePasswordAuthenticationToken(
+                            user.getEmail(), dto.getPassword()
+                    );
+
+            Authentication auth = authenticationManager.authenticate(authToken);
+            SecurityContextHolder.getContext().setAuthentication(auth);
+
+            return "redirect:/home";
+
+        } catch (Exception e) {
+            model.addAttribute("errorMsg", e.getMessage());
             return "register";
         }
-
-        // Cria usuário apenas com nome, email e senha
-        User user = new User();
-        user.setName(name);
-        user.setEmail(email);
-        user.setPassword(password);
-
-        userService.save(user);
-
-        session.setAttribute("user", user); // salva usuário na sessão
-        return "redirect:/dashboard";
-    }
-
-    // ===== LOGOUT =====
-    @PostMapping("/logout")
-    public String logout(HttpSession session) {
-        session.invalidate();
-        return "redirect:/login";
     }
 }

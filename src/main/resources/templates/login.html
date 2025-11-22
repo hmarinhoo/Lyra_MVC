@@ -2,25 +2,43 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
     <meta charset="UTF-8">
-    <title>Login - GreenPath</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Login - Lyra</title>
+    <link th:href="@{/css/login.css}" rel="stylesheet">
 </head>
 <body>
-    <h1>Login</h1>
-    <div th:if="${param.error}">
-        <p style="color:red;">E-mail ou senha inválidos.</p>
-    </div>
-    <div th:if="${param.logout}">
-        <p style="color:green;">Você saiu com sucesso.</p>
-    </div>
-    <form th:action="@{/login}" method="post">
-        <label for="email">E-mail:</label>
-        <input type="email" id="email" name="email" required><br><br>
+    <div class="blob blob-1"></div>
+    <div class="blob blob-2"></div>
 
-        <label for="password">Senha:</label>
-        <input type="password" id="password" name="password" required><br><br>
+    <div class="login-container">
+        <div class="login-card">
+            <h1>Lyra</h1>
+            <p>Bem-vindo de volta</p>
 
-        <button type="submit">Entrar</button>
-    </form>
-    <p>Não tem conta? <a th:href="@{/register}">Cadastre-se</a></p>
+            <!-- Mensagens de erro/sucesso -->
+            <div th:if="${param.error}" class="error-message">
+                E-mail ou senha inválidos.
+            </div>
+            <div th:if="${param.logout}" class="success-message">
+                Você saiu com sucesso.
+            </div>
+
+            <form th:action="@{/login}" method="post">
+                <div class="form-group">
+                    <label for="email">E-mail</label>
+                    <input type="email" id="email" name="username" required placeholder="seu@email.com">
+                </div>
+
+                <div class="form-group">
+                    <label for="password">Senha</label>
+                    <input type="password" id="password" name="password" required placeholder="••••••••">
+                </div>
+
+                <button type="submit">Entrar</button>
+            </form>
+
+            <p class="footer-link">Não tem conta? <a th:href="@{/register}">Cadastre-se agora</a></p>
+        </div>
+    </div>
 </body>
 </html>

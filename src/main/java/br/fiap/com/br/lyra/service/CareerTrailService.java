@@ -1,10 +1,12 @@
 package br.fiap.com.br.lyra.service;
 
+import br.fiap.com.br.lyra.controller.DashboardController.CareerTrailDTO;
+import br.fiap.com.br.lyra.dto.CareerTrailListDTO;
 import br.fiap.com.br.lyra.model.CareerTrail;
 import br.fiap.com.br.lyra.repository.CareerTrailRepository;
-import jakarta.transaction.Transactional;
-import org.springframework.cache.annotation.Cacheable;
+import org.springframework.transaction.annotation.Transactional;
 import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
@@ -22,8 +24,32 @@ public class CareerTrailService {
         return repository.save(trail);
     }
 
-    @Cacheable("careerTrails")
-    public Page<CareerTrail> listByUser(Long userId, Pageable pageable) {
-        return repository.findByUserIdOrderByCreatedAtDesc(userId, pageable);
+    // Aqui adicionamos @Transactional(readOnly = true) para manter a sessão aberta
+    @Transactional(readOnly = true)
+    public Page<CareerTrailListDTO> listByUser(Long userId, Pageable pageable) {
+        return repository.findAllLight(userId, pageable);
+    }
+
+
+    @Transactional
+    public void deleteByUser(Long userId) {
+        var trails = repository.findByUserIdOrderByCreatedAtDesc(userId);
+        repository.deleteAll(trails);
+    }
+
+    @Transactional(readOnly = true)
+    public CareerTrailDTO findLatestByUser(Long userId) {
+
+        var result = repository.findLatestWithUser(userId);
+
+        if (result.isEmpty()) return null;
+
+        var trail = result.get(0);
+
+        return new CareerTrailDTO(
+            trail.getProfile(),
+            trail.getContent(),
+            trail.getCreatedAt()
+        );
     }
 }

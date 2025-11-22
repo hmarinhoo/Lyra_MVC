@@ -6,6 +6,7 @@ import br.fiap.com.br.lyra.model.Quiz;
 import br.fiap.com.br.lyra.repository.QuizRepository;
 import jakarta.transaction.Transactional;
 import org.springframework.amqp.rabbit.annotation.RabbitListener;
+import org.springframework.amqp.rabbit.core.RabbitTemplate;
 import org.springframework.stereotype.Service;
 
 import java.time.Instant;
@@ -16,15 +17,18 @@ public class MessageConsumer {
     private final QuizRepository quizRepository;
     private final AIService aiService;
     private final CareerTrailService careerTrailService;
+    private final RabbitTemplate rabbitTemplate;
 
     public MessageConsumer(
             QuizRepository quizRepository,
             AIService aiService,
-            CareerTrailService careerTrailService
+            CareerTrailService careerTrailService,
+            RabbitTemplate rabbitTemplate
     ) {
         this.quizRepository = quizRepository;
         this.aiService = aiService;
         this.careerTrailService = careerTrailService;
+        this.rabbitTemplate = rabbitTemplate;
     }
 
     /**
@@ -33,18 +37,40 @@ public class MessageConsumer {
     @Transactional
     @RabbitListener(queues = RabbitConfig.TRAIL_QUEUE)
     public void processQuiz(Long quizId) {
+
         Quiz quiz = quizRepository.findById(quizId)
-                .orElseThrow(() -> new IllegalArgumentException("Quiz not found"));
+                .orElse(null);
 
-        // Usa o JSON de respostas como contexto/prompt para a IA
-        String aiResponse = aiService.generateCareerTrail(quiz.getAnswersJson());
+        if (quiz == null) {
+            System.err.println("Mensagem inválida: Quiz não encontrado. ID: " + quizId);
+            return; // apenas ignora, não reenvia
+        }
 
-        CareerTrail trail = CareerTrail.builder()
-                .user(quiz.getUser())
-                .content(aiResponse)
-                .createdAt(Instant.now())
-                .build();
+        try {
+            // Usa o JSON de respostas como contexto/prompt para a IA
+            String aiResponse = aiService.generateCareerTrail(quiz.getAnswersJson());
 
-        careerTrailService.save(trail);
+            CareerTrail trail = CareerTrail.builder()
+                    .user(quiz.getUser())
+                    .content(aiResponse)
+                    .createdAt(Instant.now())
+                    .build();
+
+            careerTrailService.save(trail);
+
+            System.out.println("Trilha de carreira gerada com sucesso para quiz ID: " + quizId);
+
+        } catch (Exception e) {
+            // Aqui você captura erros da IA, como quota excedida
+            System.err.println("Erro ao processar quiz ID " + quizId + ": " + e.getMessage());
+            System.err.println("A mensagem NÃO será reencaminhada para evitar loop.");
+
+            // opcional: envia manualmente para DLQ se quiser monitoramento
+            rabbitTemplate.convertAndSend(
+                    RabbitConfig.DLX,
+                    RabbitConfig.DLQ_ROUTING,
+                    quizId
+            );
+        }
     }
 }

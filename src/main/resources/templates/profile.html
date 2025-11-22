@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org" lang="pt-BR">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Meu Perfil</title>
+    <link th:href="@{/css/profile.css}" rel="stylesheet">
+</head>
+<body>
+    <div class="container">
+        <div class="header">
+            <h1>Meu Perfil</h1>
+            <p>Gerencie suas informações pessoais</p>
+        </div>
+
+        <div th:if="${param.success}" class="alert alert-success">
+            <p>✓ Perfil atualizado com sucesso!</p>
+        </div>
+
+        <div th:if="${param.accountDeleted}" class="alert alert-info">
+            <p>✓ Conta excluída com sucesso!</p>
+        </div>
+
+        <div class="profile-card">
+            <div class="avatar-section">
+                <div class="avatar">
+                    <span th:text="${user.name != null ? user.name.substring(0, 1).toUpperCase() : 'U'}">U</span>
+                </div>
+                <div class="avatar-name" th:text="${user.name}">Nome do Usuário</div>
+            </div>
+
+            <form th:action="@{/profile/update}" method="post">
+                <div class="form-group">
+                    <label for="name">Nome</label>
+                    <input type="text" id="name" name="name" th:value="${user.name}" required placeholder="Digite seu nome completo"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="experienceLevel">Nível de Experiência</label>
+                    <input type="text" id="experienceLevel" name="experienceLevel" th:value="${user.experienceLevel}" placeholder="Ex: Iniciante, Intermediário, Avançado"/>
+                </div>
+
+                <div class="form-group">
+                    <label for="interests">Interesses</label>
+                    <textarea id="interests" name="interests" th:text="${user.interests}" placeholder="Descreva seus interesses e áreas de interesse..."></textarea>
+                </div>
+
+                <div class="form-group">
+                    <label for="locale">Localização</label>
+                    <input type="text" id="locale" name="locale" th:value="${user.locale}" placeholder="Ex: pt-BR, en-US"/>
+                </div>
+
+                <div class="button-group">
+                    <button type="submit">Atualizar Perfil</button>
+                </div>
+            </form>
+
+            <div class="logout-section">
+                <a th:href="@{/logout}" style="flex: 1; text-decoration: none;">
+                    <button type="button" class="btn-logout" style="width: 100%;">Sair da Conta</button>
+                </a>
+                
+                <form th:action="@{/profile/delete}" method="post" style="flex: 1;" onsubmit="return confirm('⚠️ Tem certeza que deseja excluir sua conta? Esta ação não pode ser desfeita.');">
+                    <button type="submit" class="btn-delete" style="width: 100%;">Excluir Conta</button>
+                </form>
+            </div>
+        </div>
+    </div>
+</body>
+</html>

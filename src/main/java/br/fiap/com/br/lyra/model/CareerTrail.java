@@ -11,11 +11,11 @@ import jakarta.persistence.Id;
 import jakarta.persistence.JoinColumn;
 import jakarta.persistence.ManyToOne;
 import jakarta.persistence.Table;
+import jakarta.persistence.Basic;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
 import lombok.NoArgsConstructor;
-
 import java.time.Instant;
 
 @Entity
@@ -36,11 +36,9 @@ public class CareerTrail {
 
     private String profile;
 
-    @Column(columnDefinition = "text")
-    private String content; // generated trail content (markdown/json)
+    @Column(columnDefinition = "TEXT")
+    private String content;
 
     @CreationTimestamp
     private Instant createdAt;
-
- 
 }

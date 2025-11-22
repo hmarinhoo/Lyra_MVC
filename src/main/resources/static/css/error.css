@@ -1,0 +1,283 @@
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+:root {
+    --primary: #7c3aed;
+    --primary-light: #9d4edd;
+    --secondary: #d946ef;
+    --accent: #a855f7;
+    --bg-dark: #0f0a1f;
+    --text-primary: #ffffff;
+    --text-secondary: #e0e0e0;
+    --border-color: rgba(201, 58, 237, 0.3);
+}
+
+body {
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Oxygen, Ubuntu, Cantarell, sans-serif;
+    background: linear-gradient(135deg, #0a0515 0%, #1a0f3f 40%, #2d1b4e 100%);
+    color: var(--text-primary);
+    min-height: 100vh;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 2rem;
+    position: relative;
+    overflow: hidden;
+}
+
+/* Grid Background */
+body::before {
+    content: '';
+    position: absolute;
+    width: 100%;
+    height: 100%;
+    background-image: 
+        linear-gradient(rgba(124, 58, 237, 0.1) 1px, transparent 1px),
+        linear-gradient(90deg, rgba(124, 58, 237, 0.1) 1px, transparent 1px);
+    background-size: 50px 50px;
+    opacity: 0.3;
+    pointer-events: none;
+}
+
+/* Glowing Orbs */
+.glow-orb {
+    position: absolute;
+    border-radius: 50%;
+    filter: blur(70px);
+    opacity: 0.3;
+    animation: pulse 4s ease-in-out infinite;
+    pointer-events: none;
+}
+
+.glow-orb-1 {
+    width: 400px;
+    height: 400px;
+    background: radial-gradient(circle, var(--primary), transparent);
+    top: -150px;
+    left: -100px;
+    animation-delay: 0s;
+}
+
+.glow-orb-2 {
+    width: 350px;
+    height: 350px;
+    background: radial-gradient(circle, var(--secondary), transparent);
+    bottom: -120px;
+    right: -120px;
+    animation-delay: 1.5s;
+}
+
+@keyframes pulse {
+    0%, 100% { opacity: 0.3; transform: scale(1); }
+    50% { opacity: 0.5; transform: scale(1.1); }
+}
+
+/* Error Box */
+.error-box {
+    position: relative;
+    z-index: 10;
+    background: rgba(15, 10, 31, 0.8);
+    border: 2px solid var(--border-color);
+    border-radius: 20px;
+    padding: 3.5rem 3rem;
+    backdrop-filter: blur(20px);
+    box-shadow: 
+        0 0 60px rgba(124, 58, 237, 0.3),
+        inset 0 0 40px rgba(124, 58, 237, 0.05);
+    max-width: 600px;
+    width: 100%;
+    text-align: center;
+    animation: fadeInScale 0.8s cubic-bezier(0.34, 1.56, 0.64, 1);
+    position: relative;
+}
+
+/* Corner accents */
+.error-box::before,
+.error-box::after {
+    content: '';
+    position: absolute;
+    width: 30px;
+    height: 30px;
+    border: 2px solid var(--secondary);
+}
+
+.error-box::before {
+    top: -2px;
+    left: -2px;
+    border-right: none;
+    border-bottom: none;
+    border-radius: 20px 0 0 0;
+}
+
+.error-box::after {
+    bottom: -2px;
+    right: -2px;
+    border-left: none;
+    border-top: none;
+    border-radius: 0 0 20px 0;
+}
+
+@keyframes fadeInScale {
+    from {
+        opacity: 0;
+        transform: scale(0.9) translateY(30px);
+    }
+    to {
+        opacity: 1;
+        transform: scale(1) translateY(0);
+    }
+}
+
+/* Robot */
+.robot-wrapper {
+    margin-bottom: 2rem;
+    position: relative;
+    display: inline-block;
+}
+
+.robot-graphic {
+    width: 200px;
+    height: 200px;
+    animation: glitch 5s ease-in-out infinite;
+}
+
+@keyframes glitch {
+    0%, 90%, 100% { transform: translate(0, 0); }
+    92% { transform: translate(-3px, 2px); }
+    94% { transform: translate(3px, -2px); }
+    96% { transform: translate(-2px, -1px); }
+}
+
+/* Status Badge */
+.status-badge {
+    display: inline-block;
+    padding: 0.5rem 1.2rem;
+    background: rgba(239, 68, 68, 0.15);
+    border: 1px solid rgba(239, 68, 68, 0.4);
+    border-radius: 20px;
+    color: #fca5a5;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1px;
+    margin-bottom: 1.5rem;
+}
+
+/* Title */
+.error-title {
+    font-size: 2.8rem;
+    font-weight: 900;
+    background: linear-gradient(135deg, var(--primary-light), var(--secondary), var(--accent));
+    -webkit-background-clip: text;
+    -webkit-text-fill-color: transparent;
+    background-clip: text;
+    margin-bottom: 1.2rem;
+    line-height: 1.2;
+    text-shadow: 0 0 30px rgba(217, 70, 239, 0.3);
+}
+
+/* Message */
+.error-description {
+    font-size: 1.1rem;
+    color: var(--text-secondary);
+    line-height: 1.8;
+    margin-bottom: 2.5rem;
+    max-width: 480px;
+    margin-left: auto;
+    margin-right: auto;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    gap: 1rem;
+    justify-content: center;
+    flex-wrap: wrap;
+}
+
+.btn {
+    padding: 1rem 2rem;
+    border-radius: 10px;
+    text-decoration: none;
+    font-weight: 600;
+    font-size: 0.95rem;
+    transition: all 0.3s ease;
+    border: none;
+    cursor: pointer;
+    display: inline-flex;
+    align-items: center;
+    gap: 0.5rem;
+}
+
+.btn-primary {
+    background: linear-gradient(135deg, var(--primary), var(--secondary));
+    color: white;
+    box-shadow: 0 4px 20px rgba(124, 58, 237, 0.5);
+}
+
+.btn-primary:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 30px rgba(124, 58, 237, 0.7);
+}
+
+.btn-secondary {
+    background: transparent;
+    border: 2px solid var(--accent);
+    color: var(--accent);
+}
+
+.btn-secondary:hover {
+    background: rgba(168, 85, 247, 0.15);
+    border-color: var(--secondary);
+    color: var(--secondary);
+}
+
+/* Floating particles */
+.float-particle {
+    position: absolute;
+    width: 4px;
+    height: 4px;
+    background: var(--accent);
+    border-radius: 50%;
+    pointer-events: none;
+    opacity: 0.6;
+}
+
+.float-particle:nth-child(1) { top: 10%; left: 15%; animation: floatAround 12s ease-in-out infinite; }
+.float-particle:nth-child(2) { top: 70%; left: 80%; animation: floatAround 15s ease-in-out infinite 2s; }
+.float-particle:nth-child(3) { top: 30%; right: 10%; animation: floatAround 18s ease-in-out infinite 4s; }
+.float-particle:nth-child(4) { bottom: 20%; left: 25%; animation: floatAround 14s ease-in-out infinite 6s; }
+
+@keyframes floatAround {
+    0%, 100% { transform: translate(0, 0); opacity: 0.6; }
+    25% { transform: translate(20px, -30px); opacity: 0.8; }
+    50% { transform: translate(-15px, -15px); opacity: 0.4; }
+    75% { transform: translate(10px, 20px); opacity: 0.7; }
+}
+
+/* Responsive */
+@media (max-width: 640px) {
+    .error-box {
+        padding: 2.5rem 1.8rem;
+    }
+    .error-title {
+        font-size: 2.2rem;
+    }
+    .error-description {
+        font-size: 1rem;
+    }
+    .robot-graphic {
+        width: 160px;
+        height: 160px;
+    }
+    .button-group {
+        flex-direction: column;
+    }
+    .btn {
+        width: 100%;
+        justify-content: center;
+    }
+}

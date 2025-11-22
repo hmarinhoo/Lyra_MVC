@@ -1,55 +1,85 @@
 package br.fiap.com.br.lyra.controller;
 
-import br.fiap.com.br.lyra.model.Quiz;
 import br.fiap.com.br.lyra.model.User;
-import br.fiap.com.br.lyra.repository.QuizRepository;
-import jakarta.servlet.http.HttpSession;
-
+import br.fiap.com.br.lyra.repository.UserRepository;
+import br.fiap.com.br.lyra.service.QuizService;
+import lombok.RequiredArgsConstructor;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.*;
 
 @Controller
+@RequestMapping("/quiz")
+@RequiredArgsConstructor
 public class QuizController {
 
-    private final QuizRepository quizRepository;
+    private final QuizService quizService;
+    private final UserRepository userRepository;
 
-    public QuizController(QuizRepository quizRepository) {
-        this.quizRepository = quizRepository;
-    }
+    @GetMapping
+    public String quizPage(Model model) {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated()) return "redirect:/login";
 
-    @GetMapping("/quiz")
-    public String quizPage(HttpSession session) {
-        if (session.getAttribute("user") == null) {
-            return "redirect:/login";
-        }
+        User user = userRepository.findByEmail(auth.getName())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+        // Último quiz do usuário
+        var lastQuiz = quizService.getLastQuizByUser(user.getId());
+        model.addAttribute("lastQuiz", lastQuiz);
+
         return "quiz";
     }
 
-    @PostMapping("/quiz")
+    @PostMapping
     public String submitQuiz(@RequestParam("skill") String skill,
                              @RequestParam("interest") String interest,
-                             @RequestParam("goal") String goal,
-                             HttpSession session) {
+                             @RequestParam("goal") String goal) {
+        try {
+            var auth = SecurityContextHolder.getContext().getAuthentication();
+            if (auth == null || !auth.isAuthenticated()) return "redirect:/login";
 
-        User user = (User) session.getAttribute("user");
-        if (user == null) {
-            return "redirect:/login";
+            String email = auth.getName();
+            User user = userRepository.findByEmail(email)
+                    .orElseThrow(() -> new IllegalArgumentException("User not found"));
+
+            String answersJson = """
+                {"skill":"%s","interest":"%s","goal":"%s"}
+                """.formatted(skill, interest, goal);
+
+            // Se já existe um quiz, remove (update seguro)
+            var lastQuiz = quizService.getLastQuizByUser(user.getId());
+            if (lastQuiz != null) {
+                quizService.deleteQuiz(lastQuiz.getId());
+            }
+
+            quizService.submitQuiz(user.getId(), answersJson);
+
+            return "redirect:/dashboard";
+        } catch (Exception ex) {
+            ex.printStackTrace();
+            return "redirect:/error-app";
         }
+    }
 
-        // Simula perfil gerado pela IA
-        String generatedProfile = "Técnico Criativo";
+    @PostMapping("/redo")
+    public String redoQuiz() {
+        var auth = SecurityContextHolder.getContext().getAuthentication();
+        if (auth == null || !auth.isAuthenticated()) return "redirect:/login";
 
-        // Converte respostas em JSON (simples)
-        String answersJson = String.format("{\"skill\":\"%s\",\"interest\":\"%s\",\"goal\":\"%s\"}", skill, interest, goal);
+        User user = userRepository.findByEmail(auth.getName())
+                .orElseThrow(() -> new IllegalArgumentException("User not found"));
 
-        Quiz quiz = Quiz.builder()
-                .user(user)
-                .answersJson(answersJson)
-                .profile(generatedProfile)
-                .build();
+        // Remove último quiz e suas trilhas
+        var lastQuiz = quizService.getLastQuizByUser(user.getId());
+        if (lastQuiz != null) quizService.deleteQuiz(lastQuiz.getId());
 
-        quizRepository.save(quiz);
+        return "redirect:/quiz";
+    }
 
-        return "redirect:/dashboard";
+    @GetMapping("/success")
+    public String quizSuccessPage() {
+        return "dashboard";
     }
 }

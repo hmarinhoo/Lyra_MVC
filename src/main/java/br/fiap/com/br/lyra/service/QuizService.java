@@ -16,13 +16,16 @@ public class QuizService {
     private final QuizRepository quizRepository;
     private final UserRepository userRepository;
     private final MessageProducer producer;
+    private final CareerTrailService careerTrailService;
 
     public QuizService(QuizRepository quizRepository,
                        UserRepository userRepository,
-                       MessageProducer producer) {
+                       MessageProducer producer,
+                        CareerTrailService carrerTrailsService) {
         this.quizRepository = quizRepository;
         this.userRepository = userRepository;
         this.producer = producer;
+        this.careerTrailService=carrerTrailsService;
     }
 
     @Transactional
@@ -47,5 +50,21 @@ public class QuizService {
 
     public List<Quiz> listByUser(Long userId) {
         return quizRepository.findByUserIdOrderByCreatedAtDesc(userId);
+    }
+
+    public Quiz getLastQuizByUser(Long userId) {
+        List<Quiz> quizzes = quizRepository.findByUserIdOrderByCreatedAtDesc(userId);
+        if (quizzes.isEmpty()) return null;
+        return quizzes.get(0); // último quiz
+    }
+
+    @Transactional
+    public void deleteQuiz(Long quizId) {
+        var quizOpt = quizRepository.findById(quizId);
+        if (quizOpt.isPresent()) {
+            // Remover trilhas associadas
+            careerTrailService.deleteByUser(quizOpt.get().getUser().getId());
+            quizRepository.deleteById(quizId);
+        }
     }
 }
