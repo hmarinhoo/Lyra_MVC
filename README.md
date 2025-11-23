@@ -64,7 +64,7 @@ git clone https://github.com/hmarinhoo/Lyra_MVC
 cd Lyra_MVC
 ```
 
-**2. Configure o banco de dados**
+**2. Configurando **
 
 Edite `src/main/resources/application.properties`:
 ```properties
@@ -80,7 +80,9 @@ mvn spring-boot:run
 ## 📦 Deploy
 
 ### Deploy em Produção
-Aplicação preparada para deploy em:
+Aplicação preparada para deploy em: 
+https://lyra-mvc-memx.onrender.com/
+
 - 
 
 ---
