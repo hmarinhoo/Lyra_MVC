@@ -1,59 +1,88 @@
-# Lyra (GreenPath) - Docker + Postgres setup
+# Lyra - Plataforma de Orientação de Carreira com IA
 
-This repository contains a Spring Boot application (Lyra) prepared to run with PostgreSQL using Docker.
+## 👥 Integrantes
+* 👩‍💻 Hellen Marinho Cordeiro - RM: 558841
+* 👩‍💻 Heloisa Alves de Mesquita - RM: 559145
+* 👩‍💻 Gabriel Dias Menezes - RM: 555019
 
-## Quick start (Docker)
 
-1. Build and run using Docker Compose (will build the app image and start Postgres):
+## 📋 Sobre o Projeto
 
-```powershell
-# from project root (where docker-compose.yml is located)
-docker compose up --build
+A Lyra é uma plataforma web criada para orientar profissionais em um mercado de trabalho em constante transformação. Combinando IA generativa, análise de perfil e tendências globais, o sistema funciona como um mentor de carreira personalizado, ajudando o usuário a entender onde suas habilidades se encaixam no futuro e como evoluir de forma sustentável e estratégica.
+
+### Principais Funcionalidades
+
+- **Quiz Inteligente**: Identificação do perfil profissional do usuário
+- **Trilha de Desenvolvimento Personalizada**: Sugestões de áreas emergentes, cursos e certificações
+- **Cenários de Carreira**: Projeções e possibilidades até 2030
+- **Painel de Impacto ODS**: Conexão do crescimento individual com os Objetivos de Desenvolvimento Sustentável da ONU
+- **IA Generativa**: Recomendações personalizadas e análises de mercado em tempo real
+
+---
+
+## 🛠️ Tecnologias Utilizadas
+
+### Backend
+- **Java 17+**
+- **Spring Framework**
+  - Spring Boot
+  - Spring MVC
+  - Spring Data JPA
+  - Spring AI (IA Generativa com OpenAI GPT-4o-mini)
+  - Spring Cache
+  - Spring Context (Internacionalização)
+- **PostgreSQL** - Banco de dados relacional
+- **Flyway** - Versionamento e migração de banco de dados
+- **RabbitMQ** - Sistema de mensageria assíncrona
+- **Bean Validation** - Validação de dados
+
+### Frontend
+- **Thymeleaf** - Template engine
+- **HTML5, CSS3, JavaScript**
+
+---
+
+## 🗄️ Versionamento do Banco de Dados (Flyway)
+
+A aplicação utiliza **PostgreSQL** e **Flyway** para migração automática e versionamento do banco de dados. As migrações estão localizadas em:
+```
+src/main/resources/db/migration/
+```
+## 🚀 Como Executar o Projeto
+
+### Pré-requisitos
+- Java 17 ou superior
+- Maven 3.8+
+- MySQL 8.0+
+- Git
+
+### Passo a Passo
+
+**1. Clone o repositório**
+```bash
+git clone https://github.com/hmarinhoo/Lyra_MVC
+cd Lyra_MVC
 ```
 
-2. The app will be available on `http://localhost:8080` and Postgres on `localhost:5432`.
+**2. Configure o banco de dados**
 
-3. Environment variables used by the app (set in `docker-compose.yml`):
-   - `SPRING_DATASOURCE_URL` (example: `jdbc:postgresql://db:5432/lyra_db`)
-   - `SPRING_DATASOURCE_USERNAME` (default: `lyra`)
-   - `SPRING_DATASOURCE_PASSWORD` (default: `lyra_pass`)
-   - `SPRING_PROFILES_ACTIVE` should be `postgres` when running with Postgres
-
-   ## AI / OpenAI
-
-   To enable OpenAI-based generation set the environment variables (or in your environment):
-
-   - `AI_PROVIDER=openai`
-   - `OPENAI_API_KEY=<your_openai_api_key>`
-   - optionally `OPENAI_MODEL` (default `gpt-4o-mini`)
-
-   The app includes a default stub generator when `AI_PROVIDER` is not set (useful for offline development).
-
-RabbitMQ
----------
-
-The `docker-compose.yml` now includes a `rabbitmq` service with the management UI available at `http://localhost:15672` (default user/password `guest` / `guest`). The app will wait for RabbitMQ to be available before starting.
-
-When running locally without Docker, ensure RabbitMQ is reachable and configure the connection using the `SPRING_RABBITMQ_HOST`, `SPRING_RABBITMQ_PORT`, `SPRING_RABBITMQ_USERNAME` and `SPRING_RABBITMQ_PASSWORD` environment variables (defaults in dev are `rabbitmq:5672` and `guest/guest`).
-
-## Local dev without Docker
-
-You can run locally using Gradle and a local Postgres instance. Configure `SPRING_DATASOURCE_URL`, `SPRING_DATASOURCE_USERNAME` and `SPRING_DATASOURCE_PASSWORD` in your environment or in `application-postgres.properties`.
-
-```powershell
-# build
-.\gradlew.bat clean build
-# run with postgres profile
-.\gradlew.bat bootRun --args='--spring.profiles.active=postgres'
+Edite `src/main/resources/application.properties`:
+```properties
+spring.ai.openai.api-key=sk-proj-xxxxxxxxxxxxxxxxxxxxxxxx
+jwt.secret=MEUSEGREDOSUPERSECRETOPARAJWT123456789
 ```
 
-## Notes
-- The `Dockerfile` builds the project using the Gradle image, then copies the generated jar to a lightweight JRE base image.
-- The `docker-compose.yml` uses a healthcheck for Postgres and waits for it before starting the app.
+**4. Execute o projeto**
+```bash
+mvn spring-boot:run
+```
 
-If you want, I can:
-- add a `Makefile`/PowerShell helper scripts for common tasks,
-- configure CI pipeline to build and push Docker images to a registry,
-- add `flyway` migrations for DB schema initialization.
+## 📦 Deploy
 
-What should I do next?
+### Deploy em Produção
+Aplicação preparada para deploy em:
+- 
+
+---
+
+**Desenvolvido com ❤️ pela Equipe Lyra**
