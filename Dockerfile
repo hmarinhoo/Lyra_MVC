@@ -7,8 +7,11 @@ WORKDIR /app
 COPY build.gradle settings.gradle gradlew ./
 COPY gradle gradle
 
+# Dá permissão de execução ao gradlew
+RUN chmod +x gradlew
+
 # Baixa as dependências (sem compilar o projeto ainda)
-RUN ./gradlew dependencies --no-daemon || return 0
+RUN ./gradlew dependencies --no-daemon || true
 
 # Copia o restante do código-fonte
 COPY src src
